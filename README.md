@@ -38,6 +38,7 @@ perpus-flask/
 ├── db.py                      # Manajemen koneksi PyMySQL per request
 ├── db_perpustakaan.sql        # Skrip pembuatan basis data & data awal
 ├── requirements.txt           # Daftar dependensi Python
+├── jalankan.bat               # Pintasan menjalankan MariaDB + Flask di Windows
 ├── routes/
 │   ├── __init__.py
 │   ├── buku.py                # Route CRUD modul buku
@@ -60,37 +61,52 @@ perpus-flask/
 ## Cara Menjalankan Aplikasi
 
 ### 1. Persiapan Basis Data MySQL / MariaDB
-Pastikan layanan MySQL/MariaDB (misalnya melalui XAMPP atau Laragon) sudah aktif, lalu impor `db_perpustakaan.sql` melalui phpMyAdmin atau terminal:
+1. Jalankan layanan **MySQL** (dan **Apache** jika menggunakan phpMyAdmin) melalui XAMPP atau Laragon.
+2. Impor file `db_perpustakaan.sql` menggunakan salah satu cara berikut:
+   - **Lewat phpMyAdmin (Disarankan)**:
+     1. Buka `http://localhost/phpmyadmin` di browser.
+     2. Langsung klik tab **Import** di menu bagian atas (tidak perlu memilih database terlebih dahulu).
+     3. Klik **Choose File**, pilih file `db_perpustakaan.sql` dari folder proyek, lalu gulir ke bawah dan klik **Import / Go**.
+     4. Pastikan database `db_perpustakaan` muncul di panel kiri dengan 3 tabel beserta datanya (`anggota` = 6 baris, `buku` = 7 baris, `peminjaman` = 12 baris).
+   - **Lewat CMD (Windows)**:
+     Pindah ke folder proyek terlebih dahulu, lalu jalankan:
+     ```bat
+     mysql -u root -p < db_perpustakaan.sql
+     ```
+     *(Langsung tekan **Enter** saat diminta password jika memakai pengaturan bawaan XAMPP tanpa password.)*
+   - **Lewat PowerShell (Windows)**:
+     Pindah ke folder proyek terlebih dahulu, lalu jalankan:
+     ```powershell
+     Get-Content db_perpustakaan.sql | mysql -u root -p
+     ```
+3. Jika kredensial MySQL berbeda dari bawaan XAMPP (`root` tanpa password), sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable*.
 
-```bash
-mysql -u root -p < db_perpustakaan.sql
-```
+### 2. Menyiapkan Virtual Environment & Instalasi Dependensi
+Buka terminal/CMD tepat di dalam folder proyek (di Windows: buka folder proyek lewat File Explorer, klik bilah alamat di bagian atas, ketik `cmd`, lalu tekan **Enter**), kemudian jalankan perintah sesuai sistem operasi:
 
-Sesuaikan konfigurasi koneksi di `config.py` (atau melalui *environment variable* `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`) apabila kredensial MySQL berbeda dari bawaan XAMPP (`root` tanpa kata sandi).
-
-### 2. Menyiapkan Virtual Environment & Dependensi
-
-```bash
-python -m venv venv
-
-# Windows
+**Windows (CMD):**
+```bat
+py -m venv venv
 venv\Scripts\activate
+pip install -r requirements.txt
+```
+*(Catatan: Gunakan `py` jika perintah `python` tidak dikenali di PATH Windows. Jika `python` sudah terdaftar di PATH, kamu boleh mengganti `py -m venv venv` menjadi `python -m venv venv`. Pastikan muncul tanda `(venv)` di awal baris CMD setelah aktivasi.)*
 
-# Linux / macOS
+**Linux / macOS:**
+```bash
+python3 -m venv venv
 source venv/bin/activate
-
 pip install -r requirements.txt
 ```
 
 ### 3. Menjalankan Server Flask
+Pastikan virtual environment `(venv)` sedang aktif dan layanan **MySQL** tetap menyala, lalu jalankan:
 
 ```bash
-flask --app app run --debug
-# atau
 python app.py
 ```
 
-Buka browser dan akses `http://127.0.0.1:5000`.
+Tunggu hingga muncul pesan `Running on http://127.0.0.1:5000`, kemudian buka **`http://127.0.0.1:5000`** di browser. Biarkan jendela terminal tetap terbuka selama aplikasi digunakan, dan tekan **`Ctrl + C`** untuk menghentikan server setelah selesai.
 
 ## Peta URL Aplikasi
 
