@@ -2,6 +2,12 @@
 
 Implementasi aplikasi **CRUD (Create, Read, Update, Delete)** untuk Studi Kasus 1 **Sistem Informasi Perpustakaan** (`db_perpustakaan`) menggunakan **Python (Flask)**, **PyMySQL**, dan **Bootstrap 5**.
 
+Nama : Muhammad Fawwaz Alwan
+
+Kelas: 2026D
+
+NIM: 26091397125
+
 ## Teknologi yang Digunakan
 
 - **Bahasa Pemrograman**: Python 3.10+
