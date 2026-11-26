@@ -73,13 +73,34 @@ perpus-flask/
      ```bat
      mysql -u root -p < db_perpustakaan.sql
      ```
-     *(Langsung tekan **Enter** saat diminta password jika memakai pengaturan bawaan XAMPP tanpa password.)*
+     Saat diminta `Enter password:`, ketik kata sandi MySQL `root` kamu, lalu tekan **Enter**. *(Ganti `root` bila username MySQL kamu bukan `root`.)*
    - **Lewat PowerShell (Windows)**:
      Pindah ke folder proyek terlebih dahulu, lalu jalankan:
      ```powershell
      Get-Content db_perpustakaan.sql | mysql -u root -p
      ```
-3. Jika kredensial MySQL berbeda dari bawaan XAMPP (`root` tanpa password), sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable*.
+     Saat diminta `Enter password:`, ketik kata sandi MySQL `root` kamu, lalu tekan **Enter**.
+3. Jika kredensial MySQL kamu berbeda, sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable* — **terutama `DB_PASSWORD`** (di bawah ini adalah langkah paling penting agar aplikasi bisa tersambung ke MySQL):
+
+   **Cara A — lewat `config.py`** (paling mudah): buka file `config.py`, lalu ubah baris `DB_PASSWORD` menjadi kata sandi kamu. Jika tidak ada kata sandi, cukup biarkan kosong seperti `DB_PASSWORD = ''`.
+   ```python
+   DB_PASSWORD = 'kata-sandi-mysql-kamu'
+   ```
+   *(Baris `SECRET_KEY` boleh dibiarkan apa adanya — itu dipakai Flask untuk fitur session, bukan untuk MySQL.)*
+
+   **Cara B — lewat *environment variable*** (tanpa mengubah `config.py`), jalankan sebelum `python app.py`:
+   ```powershell
+   # PowerShell
+   $env:DB_PASSWORD = 'kata-sandi-mysql-kamu'
+   python app.py
+   ```
+   ```bat
+   REM CMD
+   set DB_PASSWORD=kata-sandi-mysql-kamu
+   python app.py
+   ```
+
+   > `config.py` membaca nilai bawaan `root` / kata sandi kosong, yang hanya cocok untuk XAMPP tanpa kata sandi. Karena itu, **jika MySQL kamu berpassword, `DB_PASSWORD` wajib disesuaikan** (lewat Cara A atau B), kalau tidak, aplikasi akan gagal terhubung (`Access denied for user 'root'`).
 
 ### 2. Menyiapkan Virtual Environment & Instalasi Dependensi
 Buka terminal/CMD tepat di dalam folder proyek (di Windows: buka folder proyek lewat File Explorer, klik bilah alamat di bagian atas, ketik `cmd`, lalu tekan **Enter**), kemudian jalankan perintah sesuai sistem operasi:
