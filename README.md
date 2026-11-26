@@ -115,6 +115,17 @@ pip install -r requirements.txt
 ```
 *(Catatan: Gunakan `py` jika perintah `python` tidak dikenali di PATH Windows. Jika `python` sudah terdaftar di PATH, kamu boleh mengganti `py -m venv venv` menjadi `python -m venv venv`. Pastikan muncul tanda `(venv)` di awal baris CMD setelah aktivasi.)*
 
+> **Jika `py -m venv venv` atau `pip install` diblokir** oleh kebijakan keamanan perangkat (pesan seperti *"Application Control policy has blocked this file"* atau *"blocked by your organization's Device Guard policy"*): laptop/komputermu memblokir eksekusi `.exe` di dalam folder `venv` (biasanya karena folder `Dokumen`). Gunakan Python **global** sebagai gantinya — install paket dan jalankan aplikasi **tanpa** `venv`:
+>
+> ```powershell
+> # hapus venv yang rusak (jika ada), lalu install ke Python global
+> Remove-Item -Recurse -Force venv
+> py -m pip install -r requirements.txt
+> py app.py
+> ```
+>
+> Perintah `py app.py` ini setara dengan `python app.py` pada langkah 3 di bawah.
+
 **Linux / macOS:**
 ```bash
 python3 -m venv venv
