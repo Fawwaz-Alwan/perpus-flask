@@ -19,6 +19,8 @@ SQL_DAFTAR = """
     FROM peminjaman p
     INNER JOIN anggota a ON a.id_anggota = p.id_anggota
     INNER JOIN buku b    ON b.id_buku    = p.id_buku
+    WHERE (%s = '' OR p.status = %s)
+    ORDER BY p.tgl_pinjam DESC, p.id_pinjam DESC
 """
 
 
@@ -26,14 +28,11 @@ SQL_DAFTAR = """
 @bp.route('/')
 def index():
     status = request.args.get('status', '')
-    sql, params = SQL_DAFTAR, ()
-    if status in ('dipinjam', 'kembali'):
-        sql += " WHERE p.status = %s"
-        params = (status,)
-    sql += " ORDER BY p.tgl_pinjam DESC, p.id_pinjam DESC"
+    if status not in ('dipinjam', 'kembali'):
+        status = ''
 
     with get_db().cursor() as cur:
-        cur.execute(sql, params)
+        cur.execute(SQL_DAFTAR, (status, status))
         daftar = cur.fetchall()
     return render_template('peminjaman/index.html', daftar=daftar, status=status)
 

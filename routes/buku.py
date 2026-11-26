@@ -16,7 +16,7 @@ def ambil_form():
         'pengarang': f.get('pengarang', '').strip(),
         'penerbit': f.get('penerbit', '').strip(),
         'tahun_terbit': f.get('tahun_terbit', '').strip(),
-        'stok': f.get('stok', '0').strip(),
+        'stok': f.get('stok', '').strip(),
     }
 
 
