@@ -73,14 +73,18 @@ perpus-flask/
      ```bat
      mysql -u root -p < db_perpustakaan.sql
      ```
-     Saat diminta `Enter password:`, ketik kata sandi MySQL `root` kamu, lalu tekan **Enter**. *(Ganti `root` bila username MySQL kamu bukan `root`.)*
+     Saat diminta `Enter password:`, ketik `1234` (kata sandi MySQL `root` pada setup ini), lalu tekan **Enter**. *(Ganti `root`/`1234` bila kredensial MySQL kamu berbeda — lihat langkah 3.)*
    - **Lewat PowerShell (Windows)**:
      Pindah ke folder proyek terlebih dahulu, lalu jalankan:
      ```powershell
      Get-Content db_perpustakaan.sql | mysql -u root -p
      ```
-     Saat diminta `Enter password:`, ketik kata sandi MySQL `root` kamu, lalu tekan **Enter**.
-3. Jika kredensial MySQL kamu berbeda, sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable* — **terutama `DB_PASSWORD`** (di bawah ini adalah langkah paling penting agar aplikasi bisa tersambung ke MySQL):
+     Saat diminta `Enter password:`, ketik `1234` (kata sandi MySQL `root` pada setup ini), lalu tekan **Enter**.
+3. Jika kredensial MySQL kamu berbeda, sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable*.
+
+   **Penting — kata sandi MySQL harus cocok dengan `config.py`.** Pada setup ini kata sandi `root` MySQL adalah **`1234`** (diatur saat persiapan, langkah 1.2), dan `config.py` sudah diatur dengan nilai yang sama, jadi aplikasi langsung bisa tersambung tanpa perubahan tambahan.
+
+   > Jika kamu ingin memakai kata sandi lain, pastikan **ketiganya sama**: (1) kata sandi di MySQL, (2) `DB_PASSWORD` di `config.py`, dan (3) saat diminta password di CMD/PowerShell. Ketidakcocokan di antara ketiganya adalah penyebab error `Access denied for user 'root'@'localhost'`.
 
    **Cara A — lewat `config.py`** (paling mudah): buka file `config.py`, lalu ubah baris `DB_PASSWORD` menjadi kata sandi kamu. Jika tidak ada kata sandi, cukup biarkan kosong seperti `DB_PASSWORD = ''`.
    ```python
@@ -99,8 +103,6 @@ perpus-flask/
    set DB_PASSWORD=kata-sandi-mysql-kamu
    python app.py
    ```
-
-   > `config.py` membaca nilai bawaan `root` / kata sandi kosong, yang hanya cocok untuk XAMPP tanpa kata sandi. Karena itu, **jika MySQL kamu berpassword, `DB_PASSWORD` wajib disesuaikan** (lewat Cara A atau B), kalau tidak, aplikasi akan gagal terhubung (`Access denied for user 'root'`).
 
 ### 2. Menyiapkan Virtual Environment & Instalasi Dependensi
 Buka terminal/CMD tepat di dalam folder proyek (di Windows: buka folder proyek lewat File Explorer, klik bilah alamat di bagian atas, ketik `cmd`, lalu tekan **Enter**), kemudian jalankan perintah sesuai sistem operasi:
