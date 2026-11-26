@@ -73,18 +73,18 @@ perpus-flask/
      ```bat
      mysql -u root -p < db_perpustakaan.sql
      ```
-     Saat diminta `Enter password:`, ketik `1234` (kata sandi MySQL `root` pada setup ini), lalu tekan **Enter**. *(Ganti `root`/`1234` bila kredensial MySQL kamu berbeda — lihat langkah 3.)*
+     Saat diminta `Enter password:`, **langsung tekan Enter saja** (setup ini memakai XAMPP tanpa kata sandi). *(Bila MySQL kamu berpassword, ketik kata sandinya lalu tekan Enter.)*
    - **Lewat PowerShell (Windows)**:
      Pindah ke folder proyek terlebih dahulu, lalu jalankan:
      ```powershell
      Get-Content db_perpustakaan.sql | mysql -u root -p
      ```
-     Saat diminta `Enter password:`, ketik `1234` (kata sandi MySQL `root` pada setup ini), lalu tekan **Enter**.
+     Saat diminta `Enter password:`, **langsung tekan Enter saja** (setup ini memakai XAMPP tanpa kata sandi).
 3. Jika kredensial MySQL kamu berbeda, sesuaikan `DB_HOST`, `DB_USER`, `DB_PASSWORD`, dan `DB_NAME` di file `config.py` atau melalui *environment variable*.
 
-   **Penting — kata sandi MySQL harus cocok dengan `config.py`.** Pada setup ini kata sandi `root` MySQL adalah **`1234`** (diatur saat persiapan, langkah 1.2), dan `config.py` sudah diatur dengan nilai yang sama, jadi aplikasi langsung bisa tersambung tanpa perubahan tambahan.
+   **Penting — `DB_PASSWORD` di `config.py` harus cocok dengan kata sandi MySQL kamu.** Pada setup ini MySQL `root` **tanpa kata sandi** (default XAMPP), dan `config.py` memakai `DB_PASSWORD = ''` (kosong) — jadi aplikasi langsung bisa tersambung tanpa perubahan tambahan.
 
-   > Jika kamu ingin memakai kata sandi lain, pastikan **ketiganya sama**: (1) kata sandi di MySQL, (2) `DB_PASSWORD` di `config.py`, dan (3) saat diminta password di CMD/PowerShell. Ketidakcocokan di antara ketiganya adalah penyebab error `Access denied for user 'root'@'localhost'`.
+   > Jika MySQL kamu berpassword, pastikan **ketiganya konsisten**: (1) kata sandi di MySQL, (2) `DB_PASSWORD` di `config.py`, dan (3) saat diminta password di CMD/PowerShell. Ketidakcocokan di antara ketiganya adalah penyebab error `Access denied for user 'root'@'localhost'`.
 
    **Cara A — lewat `config.py`** (paling mudah): buka file `config.py`, lalu ubah baris `DB_PASSWORD` menjadi kata sandi kamu. Jika tidak ada kata sandi, cukup biarkan kosong seperti `DB_PASSWORD = ''`.
    ```python
